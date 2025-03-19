@@ -1,0 +1,33 @@
+{
+  "name": "pawsome-back-v001",
+  "version": "1.0.0",
+  "description": "![Node.js](https://img.shields.io/badge/Node.js-20.8.1-339933?style=for-the-badge&logo=nodedotjs) ![TypeScript](https://img.shields.io/badge/TypeScript-~5.6.2-3178C6?style=for-the-badge&logo=typescript) ![Express](https://img.shields.io/badge/Express-^5.0.0--rc.4-000000?style=for-the-badge&logo=express) ![Fastify](https://img.shields.io/badge/Fastify-^5.22.0-000000?style=for-the-badge&logo=fastify)",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yolovi/pawsome-back-v001-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yolovi/pawsome-back-v001-/issues"
+  },
+  "homepage": "https://github.com/yolovi/pawsome-back-v001-#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "16.4.7",
+    "fastify": "5.2.1",
+    "jsonwebtoken": "9.0.2",
+    "mongoose": "8.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.9"
+  }
+}
