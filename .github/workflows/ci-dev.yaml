@@ -7,11 +7,11 @@ concurrency:
 on:
   push:
     branches:
-      - dev
+      - main
   workflow_dispatch:
 
 jobs:
-  security:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -21,54 +21,36 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "23.6.1"
-          cache: "npm"
-          # cache-dependency-path: package-lock.json
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
       - name: Install dependencies
-        run: npm ci
+        run: rm -rf node_modules && pnpm install --frozen-lockfile
 
       - name: Run tests
-        run: npm test --if-present
-
-  docker-build-and-push:
-    runs-on: ubuntu-latest
-    needs: security
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+        run: pnpm has test && pnpm test
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Login to Docker Hub
+      - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker Image with Multiple Tags
+      - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
+          file: ./Dockerfile
           push: true
-          file: Dockerfile
-          load: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:dev
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ github.sha }}
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:buildcache,mode=max
-
-      - name: Scan Docker image
-        uses: anchore/scan-action@v5
-        with:
-          image: "${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:dev"
-          fail-build: false
-          severity-cutoff: high
-          output-format: table
-
-      - name: Deploy to Render
-        uses: satak/webrequest-action@master
-        with:
-          url: ${{ secrets.RENDER_DEPLOY }}
-          method: GET
+            ${{ secrets.DOCKERHUB_USERNAME }}/pawsome-back:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/pawsome-back:${{ github.sha }}

@@ -2,7 +2,7 @@
 import { userRoutes } from './userRoutes.js';
 
 const indexRoutes = async (fastify, options) => {
-  fastify.register(userRoutes, { prefix: '/users' });
+  fastify.register(userRoutes, { prefix: '/auth' });
 };
 
 export { indexRoutes };
