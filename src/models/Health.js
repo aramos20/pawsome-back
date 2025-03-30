@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 //FIXME: añadir avisos en los campos no requeridos pero sin datos / aviso general - completa el perfil (campos que faltan)
 //-TODO: utils - formateo de fecha tipo dd/mm/yyyy - en todos los campos de fecha
@@ -98,4 +98,6 @@ const healthSchema = new Schema(
   { _id: false }
 );
 
-export default healthSchema;
+const Health = mongoose.model("Health", healthSchema)
+
+export default Health;

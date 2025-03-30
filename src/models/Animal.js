@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import healthSchema from "./Health";
 import fosterSchema from "./Foster";
 import adoptionSchema from "./Adoption";

@@ -1,9 +1,9 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 //FIXME: añadir avisos en los campos no requeridos pero sin datos / aviso general - completa el perfil (campos que faltan
 
 // Esquema de Mongoose
-const userSchema = new Schema(
+const userSchema = new Schema(  // userSchema <- minúscula, porque es una instancia
   {
     name: {
       type: String,
@@ -62,4 +62,4 @@ userSchema.index({
 // Exportar modelo
 const User = mongoose.model("User", userSchema);
 
-export default User;
+export default User; // <- Modelo en PascalCase

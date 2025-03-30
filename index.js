@@ -7,7 +7,8 @@ const start = async () => {
   await connectDB();
   // Iniciar el servidor
 
-  app.listen({ port: 3000 }, function (err, address) {
+  //TODO: traer la variable de port del .env y ponerla en el app.listen para que no sea una string a mano si no la variable
+  app.listen({ port: 3002 }, function (err, address) {
     if (err) {
       app.log.error(err);
       process.exit(1);

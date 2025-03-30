@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 //-TODO: utils - formateo de fecha tipo dd/mm/yyyy - en todos los campos de fecha
 // Implementar en Frontend - desplegable / checkbox -> tipo tag/label - + textarea (otro)   
@@ -17,4 +17,6 @@ const adoptionSchema = new Schema(
   { _id: false }
 );
 
-export default adoptionSchema;
+const Adoption  = mongoose.model("Adotpion", adoptionSchema) 
+
+export default Adoption;

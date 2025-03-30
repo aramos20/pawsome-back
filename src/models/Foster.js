@@ -45,4 +45,6 @@ const fosterSchema = new Schema(
   { _id: false }
 );
 
-export default fosterSchema;
+const Foster = mongoose.model("Foster", fosterSchema)
+
+export default Foster;
